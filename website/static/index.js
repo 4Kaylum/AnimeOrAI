@@ -12,10 +12,9 @@ async function runTimerWithArgs(timer, startTime) {
             currentlyPlaying = false;
             timer.value = 0
             buttonClicked(null);
-            alert("Time ran out.");
         }
         timer.value = timerDuration - elapsedTime;
-        setTimeout(runTimerWithArgs, 100, timer, startTime);
+        setTimeout(runTimerWithArgs, 10, timer, startTime);
     }
 }
 
@@ -45,6 +44,7 @@ async function getNewAnime() {
     // Show buttons
     document.getElementById("game-buttons").style.display = "block";
     document.getElementById("meta-buttons").style.display = "none";
+    document.getElementById("content").style.display = "block";
 
     // Start timer
     currentlyPlaying = true;
@@ -63,19 +63,20 @@ async function buttonClicked(isAIButton) {
     // See if they're right
     imageWasAI = document.getElementById("name").innerHTML == "";
     if(isAIButton === null) {
-
+        document.getElementById("result").innerHTML = "Time ran out :c";
     }
     else if((imageWasAI && isAIButton) || (!imageWasAI && !isAIButton)) {
-        alert("You're right!");
+        document.getElementById("result").innerHTML = "Correct!";
         await updateScore(true);
     }
     else {
-        alert("You fucked up!");
+        document.getElementById("result").innerHTML = "Wrong!";
         await updateScore(false);
     }
     if(imageWasAI) {
         document.getElementById("name").innerHTML = "Entirely AI Generated";
     }
+    document.getElementById("result").style.display = "block";
     document.getElementById("anime-data").style.display = "block";
 }
 

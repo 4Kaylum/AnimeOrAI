@@ -4,7 +4,16 @@
     <meta charset="utf-8" />
     <title>Anime or AI</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="{{ static('index.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ static('index.css') }}" />
+    <link rel="stylesheet" type="text/css" href="https://voxelfox.co.uk/static/css/icomoon.css">
+    <meta name="og:title" content="Anime or AI" />
+    <meta name="og:description" content="Can you work out whether these pictures are from a real anime?" />
+    <meta name="description" content="Can you work out whether these pictures are from a real anime?">
+    {# <meta property="og:image" content="" /> #}
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@VoxelFoxKae" />
+    <meta name="twitter:creator" content="@VoxelFoxKae" />
+    {# <meta property="twitter:image" content="" /> #}
 </head>
 <body>
 
@@ -15,7 +24,7 @@
         {# <progress id="timer-inverse" value="100" max="100"></progress> #}
     </div>
 </div>
-<div id="content">
+<div id="content" style="display: none;">
     <img id="image" src="" />
     <div id="anime-data">
         <h2 id="name"></h2>
@@ -27,8 +36,9 @@
         <button id="anime-button" class="button" onclick="buttonClicked(false)">Real</button>
         <button id="ai-button" class="button" onclick="buttonClicked(true)">AI</button>
     </div>
-    <div id="meta-buttons" style="display: none;">
-        <button id="new-button" class="button" onclick="this.disabled = true; getNewAnime().then(() => {this.disabled = false})">Get New Image</button>
+    <div id="meta-buttons">
+        <h2 id="result" style="display: none;"></h2>
+        <button id="new-button" class="button" onclick="this.disabled = true; this.innerHTML = 'Get New Image'; getNewAnime().then(() => {this.disabled = false})">Start</button>
     </div>
 </div>
 <div id="score-holder">
@@ -36,10 +46,24 @@
     <h3>Max Score: <span id="max-score">0</span></h3>
 </div>
 
+<div id="marketing">
+    <p>
+        <span>Made by</span>
+        <a href="https://twitter.com/VoxelFoxKae" target="_blank">@VoxelFoxKae</a>
+        <a href="https://twitter.com/VoxelFoxKae" target="_blank"><span class="contact-icon icon-twitter"></span></a>
+        <a href="https://discord.gg/vfl" target="_blank"><span class="contact-icon icon-discord"></span></a>
+        <a href="https://twitch.tv/VoxelFoxKae" target="_blank"><span class="contact-icon icon-twitch"></span></a>
+        <a href="mailto:kae@voxelfox.co.uk" target="_blank"><span class="contact-icon icon-at"></span></a>
+    </p>
+    <p>
+        <span>Based on a concept by</span>
+        <a href="https://twitter.com/ChongoTweet" target="_blank">@ChongoTweet</a>
+        <a href="https://twitter.com/ChongoTweet/status/1407546762160713735" target="_blank"><span class="contact-icon icon-twitter"></span></a>
+        <a href="https://www.twitch.tv/chongoshow" target="_blank"><span class="contact-icon icon-twitch"></span></a>
+    </p>
+</div>
+
 <script type="text/javascript" src="{{ static('index.js') }}"></script>
-<script type="text/javascript">
-    getNewAnime();
-</script>
 
 </body>
 </html>

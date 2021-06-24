@@ -22,7 +22,7 @@ body {
 }
 
 progress {
-    width: 50%;
+    width: 80%;
     margin: 0;
     border: 0;
     height: 8px;
@@ -75,10 +75,29 @@ button {
 }
 
 #score-holder {
-    margin-bottom: 50px;
+    /*margin-bottom: 50px;*/
+    margin-top: 10px;
 }
 
 #anime-data h2,
 #anime-data h3 {
     margin: 0;
+}
+
+#result {
+    margin: 0 10px 15px 10px;
+    color: lightblue;
+}
+
+a {
+    /*text-decoration: none;*/
+    color: inherit;
+}
+
+#marketing p {
+    margin: 0;
+}
+
+#marketing a {
+    text-decoration: none;
 }
