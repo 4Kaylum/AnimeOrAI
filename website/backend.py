@@ -88,6 +88,8 @@ async def get_random_real(request: Request) -> dict:
         async with session.post(url, json=json) as r:
             data = await r.json()
         character = data['data']['Page']['characters'][0]
+        if character['image']['large'] == "https://s4.anilist.co/file/anilistcdn/character/large/default.jpg":
+            return await get_random_real(request)
         async with session.get(character['image']['large']) as r:
             data = await r.read()
 
