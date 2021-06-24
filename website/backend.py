@@ -43,7 +43,7 @@ async def get_random_fake(request: Request) -> io.BytesIO:
 
     # Get the original
     async with aiohttp.ClientSession() as session:
-        url = f"https://thisanimedoesnotexist.ai/results/psi-1.0/seed{random.randint(0, 99999):0>5}.png"
+        url = f"https://thisanimedoesnotexist.ai/results/psi-{random.randint(3, 20) / 10:.1f}/seed{random.randint(0, 99999):0>5}.png"
         async with session.get(url) as r:
             data = await r.read()
 
