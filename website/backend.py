@@ -7,6 +7,9 @@ from aiohttp.web import HTTPFound, Request, RouteTableDef, json_response
 import aiohttp_session
 from PIL import Image
 
+import os
+
+VOTES_FILE = os.path.join(os.path.dirname(__file__), "static", "votes.txt")
 
 routes = RouteTableDef()
 QUERY = """
@@ -43,7 +46,8 @@ async def get_random_fake(request: Request) -> io.BytesIO:
 
     # Get the original
     async with aiohttp.ClientSession() as session:
-        url = f"https://thisanimedoesnotexist.ai/results/psi-{random.randint(3, 20) / 10:.1f}/seed{random.randint(0, 99999):0>5}.png"
+        file_key = f"psi-{random.randint(3, 20) / 10:.1f}/seed{random.randint(0, 99999):0>5}"
+        url = f"https://thisanimedoesnotexist.ai/results/{file_key}.png"
         async with session.get(url) as r:
             data = await r.read()
 
@@ -65,6 +69,7 @@ async def get_random_fake(request: Request) -> io.BytesIO:
 
     # Return it
     return {
+        "key": f"tadne/{file_key}",
         "name": None,
         "anime": None,
         "image": encoded,
@@ -95,6 +100,7 @@ async def get_random_real(request: Request) -> dict:
 
     # Return it
     return {
+        "key": f"real/{character['media']['nodes'][0]['title']['english']}/{character['name']['full']}",
         "name": character['name']['full'],
         "anime": character['media']['nodes'][0]['title']['english'],
         "image": get_image_b64(data),
@@ -112,3 +118,23 @@ async def api_get_random(request: Request):
     else:
         data = await get_random_real(request)
     return json_response(data)
+
+@routes.post("/api/savevote")
+async def api_save_vote(request: Request):
+    """
+    Register a response by writing file id / 
+    """
+    result = await request.json()
+    
+    if not ("key" in result and "vote" in result):
+        (json_response({"status": "bad"}))
+        
+    out_line = str(result["key"]) + " " + str(result["vote"]) + "\n"
+    if len(out_line) > 256:
+        (json_response({"status": "bad"}))
+        
+    # Append-mode write() calls are atomic as per POSIX spec, so this should(tm) always write full lines
+    with open(VOTES_FILE, 'a') as f:
+        f.write(out_line)
+    return(json_response({"status": "ok"}))
+    
