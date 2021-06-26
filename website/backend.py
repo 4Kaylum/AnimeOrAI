@@ -125,6 +125,8 @@ async def api_save_vote(request: Request):
     Register a response by writing file id / 
     """
     result = await request.json()
+    
+    # Append-mode write() calls are atomic as per POSIX spec, so this should(tm) always write full lines
     with open(VOTES_FILE, 'a') as f:
         f.write(str(result["key"]) + " " + str(result["vote"]) + "\n")
     return(json_response({"status": "ok"}))
