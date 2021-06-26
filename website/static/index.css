@@ -101,3 +101,12 @@ a {
 #marketing a {
     text-decoration: none;
 }
+
+#footer {
+    position: absolute;
+    margin: auto;
+    bottom: 10px;
+    text-align: center;
+    width: 100%;
+    left: 0;
+}
